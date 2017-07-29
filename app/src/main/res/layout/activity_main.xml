@@ -1,43 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ange.demo.parallax.ParallaxScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <Button
+        android:id="@+id/but_xiaomi"
+        android:text="仿小米橡皮筋效果"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:onClick="img"
-            android:src="@mipmap/ic_launcher"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:lineSpacingExtra="6dp"
-            android:text="@string/info"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:lineSpacingExtra="6dp"
-            android:text="@string/info"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:lineSpacingExtra="6dp"
-            android:text="@string/info"/>
-    </LinearLayout>
-</com.ange.demo.parallax.ParallaxScrollView>
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/but_scroll"
+        android:text="自定义仿viewpager左右滑动"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/but_life"
+        android:text="生命周期"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

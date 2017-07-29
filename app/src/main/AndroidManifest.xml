@@ -19,6 +19,7 @@
 
         <activity android:name="com.ange.demo.parallax.ParallaxActivity"/>
         <activity android:name="com.ange.demo.sroller.ScrollerActivity"/>
+        <activity android:name=".lifecycle.LifecycleActivity"/>
     </application>
 
 </manifest>
