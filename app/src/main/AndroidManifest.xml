@@ -21,6 +21,7 @@
         <activity android:name="com.ange.demo.sroller.ScrollerActivity"/>
         <activity android:name=".lifecycle.LifecycleActivity"/>
         <activity android:name=".js.WebActivity"/>
+        <activity android:name=".coordinator.CoordinatorActivity"/>
     </application>
 
 </manifest>
