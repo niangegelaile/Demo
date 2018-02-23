@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+
 import com.ange.demo.fileProvider.FileProviderActivity;
+
+import com.ange.demo.coordinator.CoordinatorActivity;
+
 import com.ange.demo.js.WebActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.parallax.ParallaxActivity;
@@ -20,31 +24,32 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.but_xiaomi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,ParallaxActivity.class);
+                Intent intent = new Intent(MainActivity.this, ParallaxActivity.class);
                 startActivity(intent);
             }
         });
         findViewById(R.id.but_scroll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,ScrollerActivity.class);
+                Intent intent = new Intent(MainActivity.this, ScrollerActivity.class);
                 startActivity(intent);
             }
         });
         findViewById(R.id.but_life).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,LifecycleActivity.class);
+                Intent intent = new Intent(MainActivity.this, LifecycleActivity.class);
                 startActivity(intent);
             }
         });
         findViewById(R.id.but_web).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, WebActivity.class);
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
                 startActivity(intent);
             }
         });
+
         findViewById(R.id.but_fileProvider).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,5 +57,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        findViewById(R.id.but_coo).setOnClickListener(new View.OnClickListener() {
+
+                                                          @Override
+                                                          public void onClick(View v) {
+                                                              Intent intent = new Intent(MainActivity.this, CoordinatorActivity.class);
+                                                              startActivity(intent);
+                                                          }
+                                                      }
+
+        );
+
     }
 }

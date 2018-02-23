@@ -23,8 +23,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
+
+
+        android:id="@+id/but_coo"
+        android:text="coordinator"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+
         android:id="@+id/but_fileProvider"
         android:text="fileProvider"
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
