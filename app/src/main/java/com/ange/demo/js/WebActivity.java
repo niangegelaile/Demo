@@ -4,17 +4,20 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.ActionMenuItemView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.ange.demo.R;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by liquanan on 2017/8/6.
@@ -30,9 +33,9 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         webView=(WebView)findViewById(R.id.web);
-        webView.loadUrl("http://192.168.1.104:8080/android.jsp");
+        webView.loadUrl("http://localhost:8081/#/?id=59&userId=383");
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new JsHook(),"hello");
+        webView.addJavascriptInterface(new JsHook(),"android");
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -64,11 +67,11 @@ public class WebActivity extends AppCompatActivity {
         }
         @JavascriptInterface
         public String getInfo(){
-            return "获取手机内的信息！！";
+            Map<String,Object> map=new HashMap<>();
+            map.put("id",22);
+            map.put("tel","13750523051");
+            return new JSONObject(map).toString();
         }
-
-
-
 
 
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ange.demo.fileProvider.FileProviderActivity;
 import com.ange.demo.js.WebActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.parallax.ParallaxActivity;
@@ -41,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, WebActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.but_fileProvider).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, FileProviderActivity.class);
                 startActivity(intent);
             }
         });

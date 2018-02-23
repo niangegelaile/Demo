@@ -21,6 +21,16 @@
         <activity android:name="com.ange.demo.sroller.ScrollerActivity"/>
         <activity android:name=".lifecycle.LifecycleActivity"/>
         <activity android:name=".js.WebActivity"/>
+        <activity android:name=".fileProvider.FileProviderActivity"/>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.ange.demo.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>
