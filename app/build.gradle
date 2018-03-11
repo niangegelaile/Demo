@@ -3,7 +3,12 @@ import com.app.plugin.AspectjPlugin
 apply plugin: 'com.android.application'
 apply plugin: AspectjPlugin
 android {
+
     compileSdkVersion rootProject.compileSdkVersion
+
+
+    buildToolsVersion "26.0.2"
+    
     defaultConfig {
         applicationId "com.ange.demo"
         minSdkVersion rootProject.minSdkVersion
