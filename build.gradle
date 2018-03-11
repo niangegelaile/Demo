@@ -2,11 +2,17 @@
 
 buildscript {
     repositories {
+        maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
+        maven{
+            url uri('repo')
+        }
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-
+        classpath 'org.aspectj:aspectjtools:1.8.9'
+        classpath 'com.app.plugin:gradleplugin:1.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -14,8 +20,14 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
+        maven{
+            url uri('repo')
+        }
         jcenter()
+        google()
     }
+
 }
 
 task clean(type: Delete) {
@@ -23,13 +35,26 @@ task clean(type: Delete) {
 }
 ext {
     minSdkVersion = 18
-    targetSdkVersion = 23
-    compileSdkVersion = 25
+    targetSdkVersion = 26
+    compileSdkVersion = 26
     buildToolsVersion = "26.0.2"
     versionCode = 36
     dbVersion = 32
     versionName = "2.2.0"
-    supportVersion = "25.0.1"
-    designVersion = "25.0.1"
-
+    supportVersion = "26.0.1"
+    designVersion = "26.0.1"
+    okhttpVersion="3.8.1"
+    retrofit2Version="2.3.0"
 }
+//不加这一句MakeProject会报错，其余都正常无影响
+task compileJava {}
+//configurations.all {
+//    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//        def requested = details.requested
+//        if (requested.group == 'com.android.support') {
+//            if (!requested.name.startsWith("multidex")) {
+//                details.useVersion ext.supportVersion
+//            }
+//        }
+//    }
+//}
