@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.ange.demo.R;
 import com.example.httpproxy.HttpUtil;
 import com.example.httpproxy.IRequestCallback;
+import com.example.httpproxy.Xhttp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class HttpActivity extends AppCompatActivity {
         tv=findViewById(R.id.tv_http);
         request();
     }
-
+    @Xhttp
     private void request() {
         Map<String,Object> map=new HashMap<>();
         map.put("userId", 0);

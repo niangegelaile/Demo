@@ -15,5 +15,9 @@ public class HttpAspect {
     @Around("execution(@com.example.httpproxy.Xhttp * *(..))")
     public void aroundJoinPoint(final ProceedingJoinPoint joinPoint) throws Throwable {
         Log.e("HttpAspect","aroundJoinPoint");
+        Object o=joinPoint.getTarget();
+        if(o instanceof HttpActivity){
+            Log.e("HttpAspect","o is HttpActivity");
+        }
     }
 }
