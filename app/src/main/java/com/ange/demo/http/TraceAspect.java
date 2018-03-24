@@ -30,7 +30,7 @@ public class TraceAspect {
     private static final String POINTCUT_CALL = "call(* com.ange.demo.fileProvider.FileProvider7.getUriForFile(..))";
 
     private static final String POINTCUT_METHOD_MAINACTIVITY = "execution(* *..MainActivity.onCreate(..))";
-
+    //！！！！切点冲突会不起作用
     //切点，ajc会将切点对应的Advise编织入目标程序当中
     @Pointcut(POINTCUT_METHOD)
     public void methodAnnotated() {}
