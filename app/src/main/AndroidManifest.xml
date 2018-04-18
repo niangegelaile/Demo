@@ -41,6 +41,7 @@
 
         <activity android:name=".http.HttpActivity"/>
 
+        <activity android:name=".pullToRefresh.RefreshActivity"/>
     </application>
 
 </manifest>

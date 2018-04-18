@@ -15,6 +15,7 @@ import com.ange.demo.http.HttpActivity;
 import com.ange.demo.js.WebActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.parallax.ParallaxActivity;
+import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.sroller.ScrollerActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        findViewById(R.id.but_refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RefreshActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
