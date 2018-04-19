@@ -5,6 +5,10 @@
     <com.ange.demo.pullToRefresh.RefreshView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <TextView
+            android:id="@+id/tv_content"
+            android:text="内容"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </com.ange.demo.pullToRefresh.RefreshView>
 </android.support.constraint.ConstraintLayout>

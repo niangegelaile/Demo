@@ -88,7 +88,7 @@ public class LifecycleFragment extends Fragment {
 //        if(ftv!=null){
 //            ftv.setText(msg);
 //        }
-//        Log.d("TAG", "setFragmentLife: "+msg);
+        Log.e("TAG", "setFragmentLife: "+msg);
 
     }
 
@@ -96,7 +96,7 @@ public class LifecycleFragment extends Fragment {
 //        if(atv!=null){
 //            atv.setText(msg);
 //        }
-        Log.d("TAG", "setActivityLife: "+msg);
+        Log.e("TAG", "setActivityLife: "+msg);
     }
 
 
