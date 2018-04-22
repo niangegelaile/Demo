@@ -2,6 +2,7 @@ package com.ange.demo.sroller;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -14,6 +15,7 @@ import android.widget.Scroller;
 
 public class MScrollerLayout extends ViewGroup {
 
+    private final static String TAG="MScrollerLayout";
 
     private Scroller mScroller;
 
@@ -34,6 +36,7 @@ public class MScrollerLayout extends ViewGroup {
         mScroller=new Scroller(context);
         ViewConfiguration viewConfiguration=ViewConfiguration.get(context);
         mTouchSlop=viewConfiguration.getScaledPagingTouchSlop();
+//        setClickable(true);
     }
 
 
@@ -65,10 +68,12 @@ public class MScrollerLayout extends ViewGroup {
 
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
+                Log.e(TAG,"onInterceptTouchEvent:MotionEvent.ACTION_DOWN");
                 mXDown=ev.getRawX();
                 mXLastMove=mXDown;
                 break;
             case MotionEvent.ACTION_MOVE:
+                Log.e(TAG,"onInterceptTouchEvent:MotionEvent.ACTION_MOVE");
                 mXMove=ev.getRawX();
                 mXLastMove=mXMove;
                 if(Math.abs(mXMove-mXDown)>mTouchSlop){
@@ -81,9 +86,14 @@ public class MScrollerLayout extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+//        Log.e(TAG,"onTouchEvent:"+(event.getAction()==MotionEvent.ACTION_MOVE?"MotionEvent.ACTION_MOVE":""));
+//        Log.e(TAG,"onTouchEvent:"+(event.getAction()==MotionEvent.ACTION_UP?"MotionEvent.ACTION_UP":""));
         switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                Log.e(TAG,"onTouchEvent:MotionEvent.ACTION_DOWN");
+                break;
             case MotionEvent.ACTION_MOVE:
+                Log.e(TAG,"onTouchEvent:"+"MotionEvent.ACTION_MOVE");
                 mXMove=event.getRawX();
                 float xScroll=mXLastMove-mXMove;
                 if(getScrollX()+xScroll+getWidth()>rightBorder){
@@ -98,6 +108,7 @@ public class MScrollerLayout extends ViewGroup {
                 mXLastMove=mXMove;
                 break;
             case MotionEvent.ACTION_UP:
+                Log.e(TAG,"onTouchEvent:"+"MotionEvent.ACTION_UP");
                 int targetIndex=(getScrollX()+getWidth()/2)/getWidth();
                 mScroller.startScroll(getScrollX(),0,getWidth()*targetIndex-getScrollX(),0);//第三个参数是偏移量
                 invalidate();
