@@ -5,15 +5,23 @@
     <com.ange.demo.sroller.MScrollerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
+        <ImageView
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/colorAccent"
             android:text="page1"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
-        <Button
+        <ImageView
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/colorPrimary"
             android:text="page2"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
-        <Button
+        <ImageView
+            android:focusable="true"
+            android:clickable="true"
             android:text="page3"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
