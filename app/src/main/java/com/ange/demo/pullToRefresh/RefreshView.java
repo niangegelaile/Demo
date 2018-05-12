@@ -29,8 +29,8 @@ public class RefreshView extends ViewGroup {
     private final static int FOOTER_HEIGHT=140;
     private int status=STATUS_NORMAL;
 
-
-
+    private OnRefreshListener onRefreshListener;
+    private HeadListener headListener;
     private View headerView;
     private View contentView;
     private View footerView;
@@ -56,17 +56,17 @@ public class RefreshView extends ViewGroup {
     public RefreshView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RefreshView);
-        int layoutIdHeader = a.getResourceId(R.styleable.RefreshView_header, R.layout.view_header);
+//        int layoutIdHeader = a.getResourceId(R.styleable.RefreshView_header, R.layout.view_header);
         int layoutIdFooter = a.getResourceId(R.styleable.RefreshView_footer, R.layout.view_footer);
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        headerView = layoutInflater.inflate(layoutIdHeader, null);
-        ViewGroup.LayoutParams lp = headerView.getLayoutParams();
-        if (lp == null) {
-            lp = new LayoutParams(-1, 140);//头部高度
-            headerView.setLayoutParams(lp);
-        }
-        addView(headerView);
+//        headerView = layoutInflater.inflate(layoutIdHeader, null);
+//        ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+//        if (lp == null) {
+//            lp = new LayoutParams(-1, 140);//头部高度
+//            headerView.setLayoutParams(lp);
+//        }
+//        addView(headerView);
         footerView = layoutInflater.inflate(layoutIdFooter, null);
         ViewGroup.LayoutParams lp1 = footerView.getLayoutParams();
         if (lp1 == null) {
@@ -78,7 +78,21 @@ public class RefreshView extends ViewGroup {
         mScroller = new Scroller(context);
         ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
         mTouchSlop = viewConfiguration.getScaledPagingTouchSlop();
+        setClickable(true);
     }
+
+    public void addHeadView(View view){
+        this.headerView=view;
+        this.headListener= (HeadListener) view;
+        ViewGroup.LayoutParams lp = headerView.getLayoutParams();
+        if (lp == null) {
+            lp = new LayoutParams(-1, 140);//头部高度
+            headerView.setLayoutParams(lp);
+        }
+        addView(headerView);
+    }
+
+
 
 
     @Override
@@ -178,14 +192,27 @@ public class RefreshView extends ViewGroup {
         if(status==STATUS_LOADING){
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY()-HEAD_HEIGHT);//第三个参数是偏移量
             invalidate();
+            if(onRefreshListener!=null){
+                onRefreshListener.onRefresh();
+            }
+            headListener.loading();
         }else {
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY());//第三个参数是偏移量
             invalidate();
         }
-
-
-
     }
+
+    /**
+     * 刷新完后复位
+     */
+    public void complete(){
+        mScroller.startScroll(0, getScrollY(), 0, -getScrollY());//第三个参数是偏移量
+        invalidate();
+        status=STATUS_NORMAL;
+        headListener.complete();
+    }
+
+
 
 
     @Override
@@ -195,5 +222,10 @@ public class RefreshView extends ViewGroup {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             invalidate();
         }
+    }
+
+
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
     }
 }

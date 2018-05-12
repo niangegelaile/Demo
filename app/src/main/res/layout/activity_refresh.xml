@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.ange.demo.pullToRefresh.RefreshView
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
