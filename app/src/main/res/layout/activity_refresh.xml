@@ -10,10 +10,22 @@
         android:layout_height="match_parent"
         >
 
-        <Button
+        <ScrollView
             android:id="@+id/tv_content"
+            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="内容" />
+          >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#000"
+                    android:text="@string/info"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </ScrollView>
     </com.ange.demo.pullToRefresh.RefreshView>
 </FrameLayout>

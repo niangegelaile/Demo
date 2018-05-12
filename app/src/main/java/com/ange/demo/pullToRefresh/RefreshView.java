@@ -22,12 +22,12 @@ import com.ange.demo.R;
 public class RefreshView extends ViewGroup {
     private final static String TAG = "RefreshView";
     //刷新状态
-    private final static int STATUS_NORMAL=0;
-    private final static int STATUS_PULL=1;
-    private final static int STATUS_LOADING=2;
-    private final static int HEAD_HEIGHT=140;
-    private final static int FOOTER_HEIGHT=140;
-    private int status=STATUS_NORMAL;
+    private final static int STATUS_NORMAL = 0;
+    private final static int STATUS_PULL = 1;
+    private final static int STATUS_LOADING = 2;
+    private final static int HEAD_HEIGHT = 140;
+    private final static int FOOTER_HEIGHT = 140;
+    private int status = STATUS_NORMAL;
 
     private OnRefreshListener onRefreshListener;
     private HeadListener headListener;
@@ -81,9 +81,9 @@ public class RefreshView extends ViewGroup {
         setClickable(true);
     }
 
-    public void addHeadView(View view){
-        this.headerView=view;
-        this.headListener= (HeadListener) view;
+    public void addHeadView(View view) {
+        this.headerView = view;
+        this.headListener = (HeadListener) view;
         ViewGroup.LayoutParams lp = headerView.getLayoutParams();
         if (lp == null) {
             lp = new LayoutParams(-1, 140);//头部高度
@@ -91,8 +91,6 @@ public class RefreshView extends ViewGroup {
         }
         addView(headerView);
     }
-
-
 
 
     @Override
@@ -135,6 +133,11 @@ public class RefreshView extends ViewGroup {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
         switch (ev.getAction()) {
@@ -142,12 +145,25 @@ public class RefreshView extends ViewGroup {
                 mYDown = ev.getRawY();
                 mYLastMove = mYDown;
                 break;
+
             case MotionEvent.ACTION_MOVE:
                 mYMove = ev.getRawY();
-                mYLastMove = mYMove;
-                if (Math.abs(mYMove - mYDown) > mTouchSlop) {
+//                mYLastMove = mYMove;
+//                if (Math.abs(mYMove - mYDown) > mTouchSlop) {
+                Log.d(TAG,"mYDown:"+mYDown+" mYMove:"+mYMove+" mTouchSlop:"+mTouchSlop+" contentView.getScrollY:"+contentView.getScrollY());
+                contentView.getScrollY();
+                if (!contentView.canScrollVertically(-1)){
+                Log.d(TAG, "!contentView.canScrollVertically(-1)");
+                }
+                if (!contentView.canScrollVertically(-1)&&mYMove - mYDown > mTouchSlop/3) {
+                    Log.d(TAG, "!contentView.canScrollVertically(-1)");
+                        return true;
+                }
+                if (!contentView.canScrollVertically(1)&&-(mYMove - mYDown) > mTouchSlop/3) {
+                    Log.d(TAG, "!contentView.canScrollVertically(1)");
                     return true;
                 }
+//                }
                 break;
         }
         return super.onInterceptTouchEvent(ev);
@@ -160,13 +176,14 @@ public class RefreshView extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 mYMove = event.getRawY();
                 float yScroll = mYLastMove - mYMove;
+                Log.e(TAG, "onTouchEvent: " + "mYLastMove:" + mYLastMove+"mYMove:"+mYMove);
                 Log.e(TAG, "onTouchEvent: " + "yScroll:" + yScroll);
                 if (getScrollY() + yScroll + getHeight() > bottomBorder) {
                     scrollTo(0, (int) (bottomBorder - getHeight()));//相对于顶部滑动的距离
                     return true;
                 } else if (getScrollY() + yScroll < topBorder) {
-                    double x=topBorder-getScrollY()-yScroll;//超出上边界的高度
-                    double pos= topBorder-x*(0.4+(1/(4+x)));
+                    double x = topBorder - getScrollY() - yScroll;//超出上边界的高度
+                    double pos = topBorder - x * (0.4 + (1 / (4 + x)));
                     scrollTo(0, (int) pos);
                     return true;
                 } else {
@@ -175,7 +192,7 @@ public class RefreshView extends ViewGroup {
                 mYLastMove = mYMove;
                 break;
             case MotionEvent.ACTION_UP:
-                    dealStatus();
+                dealStatus();
                 break;
 
         }
@@ -186,17 +203,17 @@ public class RefreshView extends ViewGroup {
      * 处理松手后的状态
      */
     private void dealStatus() {
-        if(getScrollY()<=-HEAD_HEIGHT){
-            status=STATUS_LOADING;
+        if (getScrollY() <= -HEAD_HEIGHT) {
+            status = STATUS_LOADING;
         }
-        if(status==STATUS_LOADING){
-            mScroller.startScroll(0, getScrollY(), 0, -getScrollY()-HEAD_HEIGHT);//第三个参数是偏移量
+        if (status == STATUS_LOADING) {
+            mScroller.startScroll(0, getScrollY(), 0, -getScrollY() - HEAD_HEIGHT);//第三个参数是偏移量
             invalidate();
-            if(onRefreshListener!=null){
+            if (onRefreshListener != null) {
                 onRefreshListener.onRefresh();
             }
             headListener.loading();
-        }else {
+        } else {
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY());//第三个参数是偏移量
             invalidate();
         }
@@ -205,14 +222,12 @@ public class RefreshView extends ViewGroup {
     /**
      * 刷新完后复位
      */
-    public void complete(){
+    public void complete() {
         mScroller.startScroll(0, getScrollY(), 0, -getScrollY());//第三个参数是偏移量
         invalidate();
-        status=STATUS_NORMAL;
+        status = STATUS_NORMAL;
         headListener.complete();
     }
-
-
 
 
     @Override
