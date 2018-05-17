@@ -42,7 +42,8 @@ dependencies {
     implementation project(':httpproxy')
     compile 'org.aspectj:aspectjrt:1.8.9'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
+    compile "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
 }
 repositories {

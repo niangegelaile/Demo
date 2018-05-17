@@ -45,10 +45,11 @@ ext {
     versionCode = 36
     dbVersion = 32
     versionName = "2.2.0"
-    supportVersion = "26.0.1"
-    designVersion = "26.0.1"
+    supportVersion = "26.1.0"
+    designVersion = "26.1.0"
     okhttpVersion="3.8.1"
     retrofit2Version="2.3.0"
+    archLifecycleVersion = "1.0.0-rc1"
 }
 //不加这一句MakeProject会报错，其余都正常无影响
 task compileJava {}

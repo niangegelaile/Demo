@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-
-import com.ange.demo.fileProvider.FileProviderActivity;
-
 import com.ange.demo.coordinator.CoordinatorActivity;
-
+import com.ange.demo.fileProvider.FileProviderActivity;
 import com.ange.demo.http.HttpActivity;
-
 import com.ange.demo.js.WebActivity;
 import com.ange.demo.kotlin.KotlinActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
