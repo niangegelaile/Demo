@@ -29,7 +29,7 @@ public class RequestImpl implements IRequest {
     }
 
     @Override
-    public <T> ICancelTool request(Map<String,Object> jsonParam, String apiUrl, final IRequestCallback<T> callback) {
+    public <T> ICancelTool get(Map<String,Object> jsonParam, String apiUrl, final IRequestCallback<T> callback) {
 //        if (NetWorkUtils.getNetWorkEnable(mContext)) {
 //            Map<String, String> params = new HashMap<String, String>();
 //            if(jsonParam!=null){
@@ -76,50 +76,50 @@ public class RequestImpl implements IRequest {
 //        }
     }
 
-//    @Override
-//    public <T> ICancelTool request(Map<String, Object> params, String apiUrl,final IRequestCallback<T> callback) {
-////        if (NetWorkUtils.getNetWorkEnable(mContext)) {
-//
-//            Subscription sb=api
-//                    .postJson(apiUrl,params)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Subscriber<ResponseBody>() {
-//                        @Override
-//                        public void onCompleted() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            callback.onFailed(e.toString());
-//                        }
-//
-//                        @Override
-//                        public void onNext(ResponseBody responseBody) {
-//                            try {
-//                                String result=responseBody.string();
-//                                Log.d("http",result);
-//                                Type cls=analysisClassInfo(callback);
-//                                String s=cls.toString();
-//                                if(!s.equals("class java.lang.String")){
-//                                    T response= (T) GsonService.parseJson(result,cls);
-//                                    callback.onSuccess(response);
-//                                }else {
-//                                    callback.onSuccess((T)result);
-//                                }
-//
-//                            } catch (IOException e) {
-//                                callback.onFailed(e.toString());
-//                            }
-//                        }
-//                    });
-//            return new CancelTool(sb);
-////        }else {
-////            callback.onNotNetwork();
-////            return new CancelTool(null);
-////        }
-//    }
+    @Override
+    public <T> ICancelTool post(Map<String, Object> params, String apiUrl,final IRequestCallback<T> callback) {
+//        if (NetWorkUtils.getNetWorkEnable(mContext)) {
+
+            Subscription sb=api
+                    .postJson(apiUrl,params)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ResponseBody>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            callback.onFailed(e.toString());
+                        }
+
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
+                            try {
+                                String result=responseBody.string();
+                                Log.d("http",result);
+                                Type cls=analysisClassInfo(callback);
+                                String s=cls.toString();
+                                if(!s.equals("class java.lang.String")){
+                                    T response= (T) GsonService.parseJson(result,cls);
+                                    callback.onSuccess(response);
+                                }else {
+                                    callback.onSuccess((T)result);
+                                }
+
+                            } catch (IOException e) {
+                                callback.onFailed(e.toString());
+                            }
+                        }
+                    });
+            return new CancelTool(sb);
+//        }else {
+//            callback.onNotNetwork();
+//            return new CancelTool(null);
+//        }
+    }
 
     /**
      * 获取泛型
