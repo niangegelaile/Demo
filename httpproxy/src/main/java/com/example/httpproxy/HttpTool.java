@@ -1,9 +1,19 @@
 package com.example.httpproxy;
 
 
+import android.content.Context;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -16,17 +26,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class HttpTool {
-
+    private final static String TAG="HttpTool";
     private static HttpTool mHttpTool;
+    private final Context context;
     private Api api;
-    public static synchronized HttpTool getInstance(){
+    public static synchronized HttpTool getInstance(Context context){
         if(mHttpTool==null){
-            mHttpTool=new HttpTool();
+            mHttpTool=new HttpTool(context);
+
         }
         return mHttpTool;
     }
 
-    private HttpTool(){
+
+
+    private HttpTool(Context context){
+        this.context=context;
         api=providerRetrofit(
                 providerOkHttpClient(),
                 providerConverterFactory(),
@@ -49,7 +64,19 @@ public class HttpTool {
             //设置 Debug Log 模式
             builder.addInterceptor(loggingInterceptor);
         }
+
+        //设置缓存
+        File httpCacheDirectory = new File(context.getCacheDir(), "cache_responses_yjbo");
+        Cache cache = null;
+        try {
+            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        } catch (Exception e) {
+            Log.e("OKHttp", "Could not create http cache", e);
+        }
+
+        builder.addNetworkInterceptor(provideerNetWorkInterceptor());
         OkHttpClient mOkHttpClient=builder
+                .cache(cache)
                 .connectTimeout(50, TimeUnit.SECONDS)
                 .writeTimeout(50,TimeUnit.SECONDS)
                 .readTimeout(50,TimeUnit.SECONDS)
@@ -91,4 +118,38 @@ public class HttpTool {
                 .addCallAdapterFactory(callAdapterFactory)
                 .build();
     }
+
+    private Interceptor provideerNetWorkInterceptor (){
+        return  new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                if(NetWorkUtils.getNetWorkEnable(context)){
+                    Response response = chain.proceed(request);
+                    String cacheControl=request.cacheControl().toString();
+                    Log.e(TAG,"cacheControl:"+cacheControl);
+                    return response.newBuilder()
+                            .removeHeader("Pragma")
+                            .removeHeader("Cache-Control")
+                            .header("Cache-Control", "public, max-age=" + 10000)
+                            .build();
+                }else {
+                   //无网时一直请求有网请求好的缓存数据，不设置过期时间
+                        request = request.newBuilder()
+                                .cacheControl(CacheControl.FORCE_CACHE)//此处不设置过期时间
+                                .build();
+                    Response response = chain.proceed(request);
+                    //下面注释的部分设置也没有效果，因为在上面已经设置了
+                    return response.newBuilder()
+                            .header("Cache-Control", "public, only-if-cached")
+                            .removeHeader("Pragma")
+                            .build();
+                }
+            }
+        };
+    }
+
+
+
+
 }

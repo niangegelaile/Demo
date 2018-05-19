@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface IRequest {
 
-    <T> ICancelTool request(String jsonParam, String apiUrl, IRequestCallback<T> callback);
+//    <T> ICancelTool request(String jsonParam, String apiUrl, IRequestCallback<T> callback);
 
     <T> ICancelTool request(Map<String, Object> map, String apiUrl, IRequestCallback<T> callback);
 }

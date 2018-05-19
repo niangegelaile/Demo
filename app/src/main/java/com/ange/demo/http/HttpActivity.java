@@ -24,7 +24,7 @@ import java.util.Map;
 public class HttpActivity extends AppCompatActivity {
     private List<ICancelTool> cancelTools=new ArrayList<>();
     TextView tv;
-    public static final String SELECT_ADVERT_URL =  "http://pension.uat.hengtech.com.cn/heyuan/"+ "api/config/selectAdvert.do";
+    public static final String SELECT_ADVERT_URL =  "http://pension.uat.hengtech.com.cn/heyuan/"+ "api/friends/getFriendsRole.do";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,16 +34,14 @@ public class HttpActivity extends AppCompatActivity {
     }
     @Xhttp
     private ICancelTool request() {
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId", 0);
-        return HttpUtil.getInstance(this).request(map, SELECT_ADVERT_URL, new IRequestCallback<AdvertResponse>() {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("userType", 2);
+        return HttpUtil.getInstance(this).request(map, SELECT_ADVERT_URL, new IRequestCallback<String>() {
             @Override
-            public void onSuccess(AdvertResponse response) {
-                if(response.isStatus()){
-                    tv.setText("ok");
-                }else {
-                    tv.setText(response.getCode());
-                }
+            public void onSuccess(String response) {
+
+                    tv.setText(response);
+
             }
 
             @Override
