@@ -16,6 +16,8 @@ import com.ange.demo.R;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         webView=(WebView)findViewById(R.id.web);
-        webView.loadUrl("http://localhost:8081/#/?id=59&userId=383");
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new JsHook(),"android");
         webView.setWebViewClient(new WebViewClient(){
@@ -50,8 +52,29 @@ public class WebActivity extends AppCompatActivity {
                 webView.loadUrl("javascript:show('"+getPackageName()+"')");
             }
         });
-    }
+//        webView.loadUrl("http://localhost:8081/#/?id=59&userId=383");
+        String tpl = getFromAssets("hygj/index.html");
+        webView.loadDataWithBaseURL("file:///android_asset/hygj/", tpl, "text/html", "utf-8", null);
 
+    }
+    /*
+        * 获取html文件
+        */
+    public String getFromAssets(String fileName) {
+        try {
+            InputStreamReader inputReader = new InputStreamReader(
+                    getResources().getAssets().open(fileName));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line = "";
+            String Result = "";
+            while ((line = bufReader.readLine()) != null)
+                Result += line;
+            return Result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 
     public class JsHook{
