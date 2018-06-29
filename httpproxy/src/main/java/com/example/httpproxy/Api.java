@@ -4,9 +4,9 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -15,8 +15,8 @@ import rx.Observable;
  */
 
 public interface Api {
-    @FormUrlEncoded
-    Observable<ResponseBody> post(@Url String url, @FieldMap Map<String, String> maps);
+    @GET
+    Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, Object> map);
 
     @POST
     Observable<ResponseBody> postJson(@Url String url,@Body Map<String,Object> map);

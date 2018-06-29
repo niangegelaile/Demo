@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-
-import com.ange.demo.fileProvider.FileProviderActivity;
-
 import com.ange.demo.coordinator.CoordinatorActivity;
-
+import com.ange.demo.fileProvider.FileProviderActivity;
 import com.ange.demo.http.HttpActivity;
-
 import com.ange.demo.js.WebActivity;
+import com.ange.demo.kotlin.KotlinActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
@@ -87,5 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.but_kotlin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, KotlinActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
