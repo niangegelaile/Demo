@@ -19,7 +19,7 @@ public class RefreshActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refresh);
         refreshView=findViewById(R.id.refresh_view);
-        refreshView.addHeadView(new HeadView(this));
+        refreshView.addHeadView(new HeadViewImp(this));
         refreshView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
