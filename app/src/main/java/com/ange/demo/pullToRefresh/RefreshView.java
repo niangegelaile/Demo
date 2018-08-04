@@ -24,15 +24,17 @@ public class RefreshView extends ViewGroup {
     //刷新状态
     private final static int STATUS_NORMAL = 0;
     private final static int STATUS_PULL = 1;
-    private final static int STATUS_LOADING = 2;
-    private  int HEAD_HEIGHT = 0;
-    private final static int FOOTER_HEIGHT = 140;
-    private int status = STATUS_NORMAL;
+    private final static int STATUS_HEADER_LOADING = 2;
+    private final static int STATUS_FOOTER_LOADING = 3;
 
+    private  int HEAD_HEIGHT = 0;
+    private  int FOOTER_HEIGHT = 0;
+    private int status = STATUS_NORMAL;
+    private boolean contentViewDisable;
     private OnRefreshListener onRefreshListener;
     private HeadView headerView;
     private View contentView;
-    private View footerView;
+    private AbstractFooterView footerView;
     private Scroller mScroller;
 
     private int mTouchSlop;
@@ -54,18 +56,6 @@ public class RefreshView extends ViewGroup {
 
     public RefreshView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RefreshView);
-        int layoutIdFooter = a.getResourceId(R.styleable.RefreshView_footer, R.layout.view_footer);
-
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        footerView = layoutInflater.inflate(layoutIdFooter, null);
-        ViewGroup.LayoutParams lp1 = footerView.getLayoutParams();
-        if (lp1 == null) {
-            lp1 = new LayoutParams(-1, 140);//底部高度
-            footerView.setLayoutParams(lp1);
-        }
-        addView(footerView);
-        a.recycle();
         mScroller = new Scroller(context);
         ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
         mTouchSlop = viewConfiguration.getScaledPagingTouchSlop();
@@ -81,7 +71,15 @@ public class RefreshView extends ViewGroup {
         }
         addView(headerView);
     }
-
+    public void addFootView(AbstractFooterView view) {
+        this.footerView = view;
+        ViewGroup.LayoutParams lp = footerView.getLayoutParams();
+        if (lp == null) {
+            lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            footerView.setLayoutParams(lp);
+        }
+        addView(footerView);
+    }
 
     @Override
     protected void onFinishInflate() {
@@ -105,7 +103,7 @@ public class RefreshView extends ViewGroup {
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
         }
         HEAD_HEIGHT= headerView.getMeasuredHeight();
-
+        FOOTER_HEIGHT=footerView.getMeasuredHeight();
     }
 
     @Override
@@ -167,7 +165,11 @@ public class RefreshView extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
+        if(contentViewDisable){
+            return true;
+        }else {
+            return super.onInterceptTouchEvent(ev);
+        }
     }
 
     @Override
@@ -180,15 +182,29 @@ public class RefreshView extends ViewGroup {
      */
     private void dealStatus() {
         if (getScrollY() <= -HEAD_HEIGHT) {
-            status = STATUS_LOADING;
+            status = STATUS_HEADER_LOADING;
         }
-        if (status == STATUS_LOADING) {
+        if(getScrollY()>=FOOTER_HEIGHT){
+            status = STATUS_FOOTER_LOADING;
+        }
+
+
+        if (status == STATUS_HEADER_LOADING) {
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY() - HEAD_HEIGHT);//第三个参数是偏移量
             invalidate();
             if (onRefreshListener != null) {
                 onRefreshListener.onRefresh();
             }
+            contentViewDisable=true;
             headerView.loading();
+        } else if(status == STATUS_FOOTER_LOADING){
+            mScroller.startScroll(0, getScrollY(), 0, -getScrollY() +FOOTER_HEIGHT);//第三个参数是偏移量
+            invalidate();
+            if (onRefreshListener != null) {
+                onRefreshListener.onLoadMore();
+            }
+            contentViewDisable=true;
+            footerView.loading();
         } else {
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY());//第三个参数是偏移量
             invalidate();
@@ -203,6 +219,7 @@ public class RefreshView extends ViewGroup {
         invalidate();
         status = STATUS_NORMAL;
         headerView.complete();
+        contentViewDisable=false;
     }
 
 

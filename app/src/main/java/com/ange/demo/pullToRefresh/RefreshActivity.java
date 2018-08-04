@@ -20,9 +20,20 @@ public class RefreshActivity extends AppCompatActivity {
         setContentView(R.layout.activity_refresh);
         refreshView=findViewById(R.id.refresh_view);
         refreshView.addHeadView(new HeadViewImp(this));
+        refreshView.addFootView(new FooterViewImp(this));
         refreshView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshView.complete();
+                    }
+                },2000);
+            }
+
+            @Override
+            public void onLoadMore() {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

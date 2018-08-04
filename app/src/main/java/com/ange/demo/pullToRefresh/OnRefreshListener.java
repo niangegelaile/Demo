@@ -6,4 +6,5 @@ package com.ange.demo.pullToRefresh;
 
 public interface OnRefreshListener {
     void onRefresh();
+    void onLoadMore();
 }
