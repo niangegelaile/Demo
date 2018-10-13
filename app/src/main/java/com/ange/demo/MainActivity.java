@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ange.demo.controlView.ControlActivity;
 import com.ange.demo.coordinator.CoordinatorActivity;
 import com.ange.demo.databinding.ActivityMainBinding;
 import com.ange.demo.fileProvider.FileProviderActivity;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         Catalog catalogFileProvide=new Catalog("FileProvide",FileProviderActivity.class.getName());
         Catalog cataloghttp=new Catalog("http封装",HttpActivity.class.getName());
         Catalog catalogRefresh=new Catalog("自定义刷新控件",RefreshActivity.class.getName());
-
+        Catalog catalogControl=new Catalog("自定义摇杆控件",ControlActivity.class.getName());
+        list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
         list.add(cataloghttp);

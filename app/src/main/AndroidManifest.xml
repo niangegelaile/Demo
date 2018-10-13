@@ -63,6 +63,7 @@
 
         <activity android:name=".pullToRefresh.RefreshActivity"/>
         <activity android:name=".kotlin.KotlinActivity"/>
+        <activity android:name=".controlView.ControlActivity"/>
     </application>
 
 </manifest>
