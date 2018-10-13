@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
-        android:id="@+id/but_xiaomi"
-        android:text="仿小米橡皮筋效果"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_scroll"
-        android:text="自定义仿viewpager左右滑动"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_life"
-        android:text="生命周期"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_web"
-        android:text="js交互"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_coo"
-        android:text="coordinator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
+<layout>
 
-        android:id="@+id/but_fileProvider"
-        android:text="fileProvider"
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="com.ange.demo.Catalog" />
+
+        <variable
+            name="catalogs"
+            type="List&lt;Catalog&gt;" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_http"
-        android:text="http"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_refresh"
-        android:text="自定义刷新"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/but_kotlin"
-        android:text="kotlin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--<Button-->
+        <!--android:id="@+id/but_xiaomi"-->
+        <!--android:text="仿小米橡皮筋效果"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_scroll"-->
+        <!--android:text="自定义仿viewpager左右滑动"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_life"-->
+        <!--android:text="生命周期"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_web"-->
+        <!--android:text="js交互"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_coo"-->
+        <!--android:text="coordinator"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+
+        <!--android:id="@+id/but_fileProvider"-->
+        <!--android:text="fileProvider"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_http"-->
+        <!--android:text="http"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_refresh"-->
+        <!--android:text="自定义刷新"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+        <!--android:id="@+id/but_kotlin"-->
+        <!--android:text="kotlin"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:data_main="@{catalogs}">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</layout>
