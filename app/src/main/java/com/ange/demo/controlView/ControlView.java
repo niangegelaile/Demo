@@ -58,19 +58,42 @@ public class ControlView extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                touchX= (int) event.getX();
-                touchY= (int) event.getY();
+                calculatePos(event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                touchX= (int) event.getX();
-                touchY= (int) event.getY();
+                calculatePos(event);
                 break;
             case MotionEvent.ACTION_UP:
                 touchX=w/2;
                 touchY=h/2;
                 break;
         }
-        requestLayout();
+        viewCenter.layout(touchX-viewCenterSize/2,
+                touchY-viewCenterSize/2,
+                touchX-viewCenterSize/2+viewCenter.getMeasuredWidth(),
+                touchY-viewCenterSize/2+viewCenter.getMeasuredHeight());
         return true;
     }
+
+    /**
+     * 限制不超出范围
+     * @param event
+     */
+    private void calculatePos(MotionEvent event){
+        touchX= (int) event.getX();
+        touchY= (int) event.getY();
+        if(touchX+viewCenterSize/2>getWidth()){
+            touchX=getWidth()-viewCenterSize/2;
+        }
+        if(touchX-viewCenterSize/2<0){
+            touchX=viewCenterSize/2;
+        }
+        if(touchY+viewCenterSize/2>getHeight()){
+            touchY=getHeight()-viewCenterSize/2;
+        }
+        if(touchY-viewCenterSize/2<0){
+            touchY=viewCenterSize/2;
+        }
+    }
+
 }
