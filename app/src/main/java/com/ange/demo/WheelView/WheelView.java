@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WheelView extends View {
-
+    private static final String TAG="WheelView";
     private List<String> datas;
     private Paint textPaint;
     private int lineHeight;
@@ -65,16 +65,17 @@ public class WheelView extends View {
         super.onDraw(canvas);
         int textStartPointX=0;//左下角的点
         int textStartPointY=0;
-        int scrolly=getScrollY();
-        textStartPointY=-scrolly;
-        for(int i=0;i<datas.size();i++){
-            textPaint.getTextBounds(datas.get(i), 0, datas.get(i).length(), rect);
-//            textStartPointY=rect.height();//右下角的点
-            Log.e("onDraw","textStartPointX="+textStartPointX+",textStartPointY="+textStartPointY);
-            canvas.drawText(datas.get(i),textStartPointX,rect.height()+textStartPointY,textPaint);
-            canvas.save();
-            canvas.translate(0,lineHeight);
-        }
+        int scrolly=getScrollY();//目前view 滑动的距离
+        textStartPointY=scrolly;
+//        for(int i=0;i<datas.size();i++){
+//            textPaint.getTextBounds(datas.get(i), 0, datas.get(i).length(), rect);
+////            textStartPointY=rect.height();//右下角的点
+//            Log.e("onDraw","textStartPointX="+textStartPointX+",textStartPointY="+textStartPointY);
+//            canvas.drawText(datas.get(i),textStartPointX,rect.height()+textStartPointY,textPaint);
+//            canvas.save();
+//            canvas.translate(0,lineHeight);
+//        }
+        drawText(canvas,textStartPointY,textStartPointY+getHeight(),textStartPointX);
     }
 
     /**
@@ -83,15 +84,20 @@ public class WheelView extends View {
      * @param startPointY 绘制文字的起点
      * @param endPointY
      */
-    private void drawText(Canvas canvas,int startPointY,int endPointY){
+    private void drawText(Canvas canvas,int startPointY,int endPointY,int textStartPointX){
+//        canvas.restore();
+        Log.e(TAG,"startPointY:"+startPointY);
         canvas.clipRect(0,startPointY,getWidth(),endPointY);
-
-        while((startPointY=startPointY+lineHeight)<endPointY){
-            int textIndex= (startPointY-lineHeight)/lineHeight;//偏移的行数
+        while((startPointY)<endPointY){
+            int textIndex= (startPointY)/lineHeight;//偏移的行数
             int index=0;
             index=Math.abs(textIndex%datas.size());
+            String s=datas.get(index);
+            canvas.drawText(s,textStartPointX,startPointY+lineHeight,textPaint);
+            startPointY+=lineHeight;
         }
-
+        canvas.save();
+        canvas.restore();
     }
 
 
@@ -118,13 +124,15 @@ public class WheelView extends View {
                 scrollBy(0,(int) dy);
                 perX=curX;
                 perY=curY;
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
                 int offsetY=getScrollY()%lineHeight;
                 scroller.startScroll(0,getScrollY(),0,-offsetY);
+                invalidate();
                 break;
         }
-        invalidate();
+
         return true;
     }
 
