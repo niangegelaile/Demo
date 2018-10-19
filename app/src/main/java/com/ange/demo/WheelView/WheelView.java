@@ -77,6 +77,28 @@ public class WheelView extends View {
         }
     }
 
+    /**
+     *
+     * @param canvas
+     * @param startPointY 绘制文字的起点
+     * @param endPointY
+     */
+    private void drawText(Canvas canvas,int startPointY,int endPointY){
+        canvas.clipRect(0,startPointY,getWidth(),endPointY);
+
+        while((startPointY=startPointY+lineHeight)<endPointY){
+            int textIndex= (startPointY-lineHeight)/lineHeight;//偏移的行数
+            int index=0;
+            index=Math.abs(textIndex%datas.size());
+        }
+
+    }
+
+
+
+
+
+
     private float perX,perY;
     private float dy,dx;
 
@@ -96,9 +118,10 @@ public class WheelView extends View {
                 scrollBy(0,(int) dy);
                 perX=curX;
                 perY=curY;
-
                 break;
             case MotionEvent.ACTION_UP:
+                int offsetY=getScrollY()%lineHeight;
+                scroller.startScroll(0,getScrollY(),0,-offsetY);
                 break;
         }
         invalidate();
