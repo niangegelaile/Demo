@@ -65,6 +65,7 @@
         <activity android:name=".kotlin.KotlinActivity"/>
         <activity android:name=".controlView.ControlActivity"/>
         <activity android:name=".WheelView.WheelActivity"/>
+        <activity android:name=".shadow.ShadowActivity"/>
     </application>
 
 </manifest>
