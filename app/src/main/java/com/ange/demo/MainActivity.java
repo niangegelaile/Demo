@@ -13,11 +13,12 @@ import com.ange.demo.databinding.ActivityMainBinding;
 import com.ange.demo.fileProvider.FileProviderActivity;
 import com.ange.demo.http.HttpActivity;
 import com.ange.demo.js.WebActivity;
-import com.ange.demo.kotlin.KotlinActivity;
+
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.sroller.ScrollerActivity;
+import com.niangegelaile.kotlinlibrary.KotlinActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Catalog catalogRefresh=new Catalog("自定义刷新控件",RefreshActivity.class.getName());
         Catalog catalogControl=new Catalog("自定义摇杆控件",ControlActivity.class.getName());
         Catalog catalogWheelView=new Catalog("自定义WheelView",WheelActivity.class.getName());
+        Catalog catalogKolin=new Catalog("Kotlin",KotlinActivity.class.getName());
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
@@ -48,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         list.add(catalogLifeCycle);
         list.add(catalogFileProvide);
         list.add(catalogWheelView);
+        list.add(catalogKolin);
         binding.setCatalogs(list);
-
 
     }
 }

@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -107,7 +109,7 @@ public class WheelView extends View {
 
     private int getTextBaseLineY(int i) {
         int baseLineY=lineHeight*i+lineHeight;
-        return baseLineY;//初始基线+scrollY  例子：0*lineHeight+lineHeight+getScrollY
+        return baseLineY;// 例子：0*lineHeight+lineHeight
 
     }
 

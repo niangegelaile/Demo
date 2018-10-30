@@ -1,7 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.71'
+//    ext.kotlin_version = '1.2.30'
     repositories {
         maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
         maven{
@@ -38,6 +39,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 ext {
+    anko_version='0.10.7'
     minSdkVersion = 18
     targetSdkVersion = 26
     compileSdkVersion = 26
@@ -45,11 +47,11 @@ ext {
     versionCode = 36
     dbVersion = 32
     versionName = "2.2.0"
-    supportVersion = "26.1.0"
-    designVersion = "26.1.0"
+    supportVersion = "27.1.1"
+    designVersion = "27.1.1"
     okhttpVersion="3.8.1"
     retrofit2Version="2.3.0"
-    archLifecycleVersion = "1.0.0-rc1"
+    archLifecycleVersion = "1.1.1"
 }
 //不加这一句MakeProject会报错，其余都正常无影响
 task compileJava {}
