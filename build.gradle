@@ -29,6 +29,7 @@ allprojects {
         maven{
             url uri('repo')
         }
+        maven { url "https://jitpack.io" }
         jcenter()
         google()
     }
@@ -39,8 +40,11 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 ext {
+
     anko_version='0.10.7'
-    minSdkVersion = 18
+
+    minSdkVersion = 26
+
     targetSdkVersion = 26
     compileSdkVersion = 26
     buildToolsVersion = "26.0.2"
