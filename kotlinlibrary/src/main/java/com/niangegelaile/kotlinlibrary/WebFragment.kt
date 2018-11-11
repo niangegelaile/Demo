@@ -47,6 +47,7 @@ class WebFragment : Fragment() {
     }
 
     companion object {
+        private val loadMethod="javascript:%1\$s(%2\$s)"
         fun newInstance(): WebFragment {
             return WebFragment()
         }
