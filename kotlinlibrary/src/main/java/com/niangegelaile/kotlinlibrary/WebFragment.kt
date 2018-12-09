@@ -5,10 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI
 
@@ -27,8 +24,17 @@ class WebFragment : Fragment() {
                             override fun onProgressChanged(view: WebView, newProgress: Int) {
 
                             }
+                            //打印log
+                            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                                return super.onConsoleMessage(consoleMessage)
+                            }
+
+                            override fun onReceivedTitle(view: WebView?, title: String?) {
+                                super.onReceivedTitle(view, title)
+                            }
                         }
                         webViewClient = object : WebViewClient() {
+                            //拦截url
                             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                                 return true
                             }

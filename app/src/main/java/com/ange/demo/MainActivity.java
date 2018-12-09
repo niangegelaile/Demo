@@ -12,6 +12,7 @@ import com.ange.demo.http.HttpActivity;
 import com.ange.demo.js.WebActivity;
 
 import com.ange.demo.lifecycle.LifecycleActivity;
+import com.ange.demo.midea.MideaActivity;
 import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.shadow.ShadowActivity;
@@ -22,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    List<Catalog> list=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityMainBinding binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
-        List<Catalog> list=new ArrayList<>();
+
         Catalog catalogXiaomi=new Catalog("小米橡皮筋效果",ParallaxActivity.class.getName());
         Catalog catalogviewPager=new Catalog("仿viewPager",ScrollerActivity.class.getName());
         Catalog catalogLifeCycle=new Catalog("activity/fragment生命周期",LifecycleActivity.class.getName());
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Catalog catalogKolin=new Catalog("Kotlin",KotlinActivity.class.getName());
 
         Catalog catalogShodow=new Catalog("Shadow",ShadowActivity.class.getName());
-
+        addItem("视频录制",MideaActivity.class);
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
@@ -60,4 +61,12 @@ public class MainActivity extends AppCompatActivity {
         binding.setCatalogs(list);
 
     }
+
+
+    private void addItem(String name,Class clz){
+        Catalog catalog=new Catalog("media",clz.getName());
+        list.add(catalog);
+    }
+
+
 }
