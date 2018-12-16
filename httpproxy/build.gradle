@@ -32,13 +32,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //网络请求：okhttp,retrofit2
-    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit2Version"
+    api "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    api "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
+    api "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit2Version"
 
     //rxjava
-    compile 'io.reactivex:rxjava:1.2.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    api 'io.reactivex:rxjava:1.2.0'
+    api 'io.reactivex:rxandroid:1.2.1'
 }

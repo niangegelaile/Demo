@@ -3,6 +3,7 @@ package com.ange.demo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.ange.demo.WheelView.WheelActivity;
 import com.ange.demo.controlView.ControlActivity;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     List<Catalog> list=new ArrayList<>();
+    private String TAG="TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +61,46 @@ public class MainActivity extends AppCompatActivity {
         list.add(catalogShodow);
 
         binding.setCatalogs(list);
-
+        Log.d(TAG,"main: onCreate");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"main:onStart");
+    }
 
-    private void addItem(String name,Class clz){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"main:onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"main:onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"main:onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"main:onDestroy");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"main:onRestart");
+    }
+
+    private void addItem(String name, Class clz){
         Catalog catalog=new Catalog("media",clz.getName());
         list.add(catalog);
     }
