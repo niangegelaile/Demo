@@ -23,4 +23,9 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.ange.scroller", appContext.getPackageName());
     }
+
+
+
+
+
 }
