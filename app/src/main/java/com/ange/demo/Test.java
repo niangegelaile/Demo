@@ -3,7 +3,8 @@ package com.ange.demo;
 public class Test {
 
     public static void main(String[] args) {
-        test3();
+//        test3();
+        System.out.println("result = " + fun("Smart"));
     }
 //包装类属于引用数据类型，所以它们之间的区别就是基本数据类型和引用数据类型的区别。反应到内存中，基本数据类型的值是存放在栈里面，而包装类的栈存放的是值得地址，值存放在堆内存中。
 //初始值不同，eg： int的初始值为 0 、 boolean的初始值为false 而包装类型的初始值为null
@@ -49,4 +50,12 @@ public class Test {
         int rusult = a++ + 4<<2; //先算 a++ 得2 再+4 得 6 左移两位 得24
         System.out.println("rusult:" + rusult);//false
     }
+
+
+    public static String fun(String s) {
+      return s.substring(1) + s.charAt(0);
+    }
+
+
+
 }
