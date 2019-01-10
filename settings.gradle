@@ -1,1 +1,1 @@
-include ':app', ':httpproxy', ':plugin', ':kotlinlibrary'
+include ':app', ':httpproxy', ':plugin', ':kotlinlibrary', ':plugindemo'

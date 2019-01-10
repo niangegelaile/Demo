@@ -15,6 +15,7 @@ import com.ange.demo.js.WebActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.midea.MideaActivity;
 import com.ange.demo.parallax.ParallaxActivity;
+import com.ange.demo.plugin.SubActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.shadow.ShadowActivity;
 import com.ange.demo.sroller.ScrollerActivity;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         Catalog catalogShodow=new Catalog("Shadow",ShadowActivity.class.getName());
         addItem("视频录制",MideaActivity.class);
+
+        addItem("android插件化",SubActivity.class);
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
