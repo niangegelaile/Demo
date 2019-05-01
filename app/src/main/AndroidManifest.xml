@@ -78,6 +78,7 @@
         <activity android:name=".shadow.ShadowActivity"/>
         <activity android:name=".midea.MideaActivity"/>
         <activity android:name=".plugin.SubActivity"/>
+        <activity android:name=".nested.NestActivity"/>
     </application>
 
 </manifest>

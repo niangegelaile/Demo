@@ -14,6 +14,7 @@ import com.ange.demo.js.WebActivity;
 
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.midea.MideaActivity;
+import com.ange.demo.nested.NestActivity;
 import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.plugin.SubActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         addItem("视频录制",MideaActivity.class);
 
         addItem("android插件化",SubActivity.class);
+        addItem("nested",NestActivity.class);
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addItem(String name, Class clz){
-        Catalog catalog=new Catalog("media",clz.getName());
+        Catalog catalog=new Catalog(name,clz.getName());
         list.add(catalog);
     }
 

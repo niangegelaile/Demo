@@ -12,9 +12,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         try {
-            InjectUtil.inject(this,getClassLoader());
-            HookHelper.hookAMS();
-            HookHelper.hookH();
+//            InjectUtil.inject(this,getClassLoader());
+//            HookHelper.hookAMS();
+//            HookHelper.hookH();
         } catch (Exception e) {
             e.printStackTrace();
         }
