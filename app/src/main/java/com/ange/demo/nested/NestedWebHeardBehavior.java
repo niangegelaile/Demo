@@ -20,11 +20,12 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
         Log.d(TAG, "onInterceptTouchEvent child.getBottom()" + child.getBottom());
+
         return super.onInterceptTouchEvent(parent, child, ev);
     }
 
-//    @Override
-//    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
+    @Override
+    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
 //        int top = child.getTop();
 //        int bottom = child.getBottom();
 //
@@ -33,7 +34,9 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
 //        }else if(dy>0&&top<=0){
 //            super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
 //        }
-//    }
+        Log.d(TAG,"dy="+dy);
+        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
+    }
 
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {

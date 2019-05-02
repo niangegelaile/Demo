@@ -108,19 +108,19 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 }
 
                 // Remember where the motion event started
-                mLastMotionY = (int) vtev.getY();
-                mActivePointerId = vtev.getPointerId(0);
+                mLastMotionY = (int) event.getY();
+                mActivePointerId = event.getPointerId(0);
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH);
                 result = super.onTouchEvent(vtev);
                 break;
             case MotionEvent.ACTION_MOVE:
-                final int activePointerIndex = vtev.findPointerIndex(mActivePointerId);
+                final int activePointerIndex = event.findPointerIndex(mActivePointerId);
                 if (activePointerIndex == -1) {
 
                     break;
                 }
 
-                final int y = (int) vtev.getY(activePointerIndex);
+                final int y = (int) event.getY(activePointerIndex);
                 int deltaY = mLastMotionY - y;
                 if(canScrollVertically(-1)&&deltaY<0){//webView 已有滑动距离，向顶部滑的情况
                     Log.d(TAG,"webView 已有滑动距离，向顶部滑的情况:"+"getScrollY()="+getScrollY()+" deltaY="+deltaY);
@@ -159,15 +159,15 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                         if(deltaY<=0){
                             if(canScrollVertically(-1)){//向顶部滑动
                                 if(getScrollY()+deltaY<0){
-                                    scrollBy(0,-getScrollY());
+//                                    scrollBy(0,-getScrollY());
                                     scrolledDeltaY=-getScrollY();
                                     unconsumedY=getScrollY()+deltaY;
                                 }else {
-                                    scrollBy(0,deltaY);
+//                                    scrollBy(0,deltaY);
                                     scrolledDeltaY=deltaY;
                                     unconsumedY=0;
                                 }
-
+                                super.onTouchEvent(vtev);
                             }
 
                         }else {
@@ -209,6 +209,9 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 stopNestedScroll();
                 result = super.onTouchEvent(vtev);
                 break;
+        }
+        if (mVelocityTracker != null) {
+            mVelocityTracker.addMovement(vtev);
         }
         vtev.recycle();
         return result;
