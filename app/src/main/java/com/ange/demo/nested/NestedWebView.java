@@ -125,7 +125,8 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 if(canScrollVertically(-1)&&deltaY<0){//webView 已有滑动距离，向顶部滑的情况
                     Log.d(TAG,"webView 已有滑动距离，向顶部滑的情况:"+"getScrollY()="+getScrollY()+" deltaY="+deltaY);
                     if(getScrollY()+deltaY<0){
-                        scrollBy(0,-getScrollY());
+//                        scrollBy(0,-getScrollY());
+                        super.onTouchEvent(vtev);
                     }else {
                         super.onTouchEvent(vtev);
                     }
