@@ -7,6 +7,7 @@
     <android.support.design.widget.AppBarLayout
         app:layout_behavior="com.ange.demo.nested.NestedWebHeardBehavior"
         android:layout_width="match_parent"
+        android:background="#fff"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -21,29 +22,29 @@
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-           <com.ange.demo.nested.NestedScrollWebView
-               android:id="@+id/web"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+           <!--<com.ange.demo.nested.NestedScrollWebView-->
+               <!--android:id="@+id/web"-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="wrap_content">-->
 
-           </com.ange.demo.nested.NestedScrollWebView>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-    <com.ange.demo.nested.NestedScrollWebView
+           <!--</com.ange.demo.nested.NestedScrollWebView>-->
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+    <com.ange.demo.nested.NestedWebView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/web"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.ange.demo.nested.NestedScrollWebView>
+    </com.ange.demo.nested.NestedWebView>
 </android.support.design.widget.CoordinatorLayout>

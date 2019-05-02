@@ -16,7 +16,8 @@ public class NestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nest);
         WebView webView=findViewById(R.id.web);
-        webView.loadUrl("https://www.baidu.com/?tn=62095104_26_oem_dg");
+//        webView.loadUrl("https://www.baidu.com/?tn=62095104_26_oem_dg");
+        webView.loadUrl("file:///android_asset/test1.html");
        int h= getResources().getDisplayMetrics().heightPixels;
        webView.getLayoutParams().height=h;
         webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
