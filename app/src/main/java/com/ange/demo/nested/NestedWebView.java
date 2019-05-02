@@ -153,22 +153,29 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                     mLastMotionY = y - mScrollOffset[1];//上一次的坐标
 
                     final int oldY = getScrollY();
-                    final int scrolledDeltaY = getScrollY() - oldY;
-                    final int unconsumedY = deltaY - scrolledDeltaY;
+                     int scrolledDeltaY = getScrollY() - oldY;
+                     int unconsumedY = deltaY - scrolledDeltaY;
                     if(Math.abs(deltaY)>0){
                         if(deltaY<=0){
                             if(canScrollVertically(-1)){//向顶部滑动
                                 if(getScrollY()+deltaY<0){
                                     scrollBy(0,-getScrollY());
+                                    scrolledDeltaY=-getScrollY();
+                                    unconsumedY=getScrollY()+deltaY;
                                 }else {
                                     scrollBy(0,deltaY);
+                                    scrolledDeltaY=deltaY;
+                                    unconsumedY=0;
                                 }
 
                             }
+
                         }else {
                             if(canScrollVertically(1)){
 //                                scrollBy(0,deltaY);
                                 super.onTouchEvent(vtev);
+                                scrolledDeltaY=deltaY;
+                                unconsumedY=0;
                             }
                         }
 
