@@ -111,7 +111,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 mLastMotionY = (int) event.getY();
                 mActivePointerId = event.getPointerId(0);
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH);
-                result = super.onTouchEvent(vtev);
+                result = super.onTouchEvent(event);
                 break;
             case MotionEvent.ACTION_MOVE:
                 final int activePointerIndex = event.findPointerIndex(mActivePointerId);
@@ -125,11 +125,11 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 if(canScrollVertically(-1)&&deltaY<0){//webView 已有滑动距离，向顶部滑的情况
                     Log.d(TAG,"webView 已有滑动距离，向顶部滑的情况:"+"getScrollY()="+getScrollY()+" deltaY="+deltaY);
                     if(getScrollY()+deltaY<0){
-//                        scrollBy(0,-getScrollY());
+                        scrollBy(0,-getScrollY());
                     }else {
-//                        scrollBy(0,deltaY);
+                        super.onTouchEvent(vtev);
                     }
-                    super.onTouchEvent(vtev);
+
                     deltaY=Math.min(0,deltaY+getScrollY());
                 }
                 if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset, ViewCompat.TYPE_TOUCH)) {
@@ -161,7 +161,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                                 if(getScrollY()+deltaY<0){
 //                                    scrollBy(0,-getScrollY());
                                     scrolledDeltaY=-getScrollY();
-                                    unconsumedY=getScrollY()+deltaY;
+                                    unconsumedY=0;
                                 }else {
 //                                    scrollBy(0,deltaY);
                                     scrolledDeltaY=deltaY;
@@ -201,13 +201,13 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 mActivePointerId = INVALID_POINTER;
                 endDrag();
                 stopNestedScroll();
-                result = super.onTouchEvent(vtev);
+                result = super.onTouchEvent(event);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 mActivePointerId = INVALID_POINTER;
                 endDrag();
                 stopNestedScroll();
-                result = super.onTouchEvent(vtev);
+                result = super.onTouchEvent(event);
                 break;
         }
         if (mVelocityTracker != null) {
