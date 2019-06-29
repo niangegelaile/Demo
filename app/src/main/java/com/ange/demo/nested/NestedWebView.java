@@ -26,11 +26,10 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     private NestedScrollingChildHelper mScrollingChildHelper;
     private int mLastMotionY;
     /**
-     * Determines speed during touch scrolling
+     * 用于跟踪触摸事件速度的辅助类，用于实现
+     * fling 和其他类似的手势。
      */
     private VelocityTracker mVelocityTracker;
-
-
     /**
      * True if the user is currently dragging this ScrollView around. This is
      * not the same as 'is being flinged', which can be checked by
@@ -39,7 +38,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     private boolean mIsBeingDragged = false;
     /**
      * ID of the active pointer. This is used to retain consistency during
-     * drags/flings if multiple pointers are used.
+     * drags/flings if multiple pointers are used.（多点触控有用）
      */
     private int mActivePointerId = INVALID_POINTER;
     private int mTouchSlop;
@@ -59,7 +58,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
         mTouchSlop = configuration.getScaledTouchSlop();
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
-        setNestedScrollingEnabled(true);
+        setNestedScrollingEnabled(true);//设置支持嵌套滑动
     }
 
     public NestedWebView(Context context) {
@@ -82,8 +81,8 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         initVelocityTrackerIfNotExists();
-        MotionEvent vtev = MotionEvent.obtain(event);
-        final int actionMasked = event.getActionMasked();
+        MotionEvent vtev = MotionEvent.obtain(event);//复制一个event
+        final int actionMasked = event.getActionMasked();//类似getAction
         boolean result = false;
         if (actionMasked == MotionEvent.ACTION_DOWN) {
             mNestedYOffset = 0;
@@ -95,13 +94,13 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 if ((mIsBeingDragged = !mScroller.isFinished())) {
                     final ViewParent parent = getParent();
                     if (parent != null) {
-                        parent.requestDisallowInterceptTouchEvent(true);
+                        parent.requestDisallowInterceptTouchEvent(true);//不让父布局拦截事件
                     }
                 }
 
                 /*
                  * If being flinged and user touches, stop the fling. isFinished
-                 * will be false if being flinged.
+                 * will be false if being flinged.//如果在fling 的过程中用户触摸屏幕，则停止fling
                  */
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
@@ -116,23 +115,22 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
             case MotionEvent.ACTION_MOVE:
                 final int activePointerIndex = event.findPointerIndex(mActivePointerId);
                 if (activePointerIndex == -1) {
-
                     break;
                 }
-
                 final int y = (int) event.getY(activePointerIndex);
                 int deltaY = mLastMotionY - y;
-                if(canScrollVertically(-1)&&deltaY<0){//webView 已有滑动距离，向顶部滑的情况
-                    Log.d(TAG,"webView 已有滑动距离，向顶部滑的情况:"+"getScrollY()="+getScrollY()+" deltaY="+deltaY);
-                    if(getScrollY()+deltaY<0){
-//                        scrollBy(0,-getScrollY());
-                        super.onTouchEvent(vtev);
-                    }else {
-                        super.onTouchEvent(vtev);
-                    }
-
-                    deltaY=Math.min(0,deltaY+getScrollY());
-                }
+//                if(canScrollVertically(-1)&&deltaY<0){//webView 已有滑动距离，向顶部滑的情况(回到顶部)
+//                    Log.d(TAG,"webView 已有滑动距离，向顶部滑的情况:"+"getScrollY()="+getScrollY()+" deltaY="+deltaY);
+//                    if(getScrollY()+deltaY<0){
+////                        scrollBy(0,-getScrollY());
+//                        super.onTouchEvent(vtev);
+//                    }else {
+//                        super.onTouchEvent(vtev);
+//                    }
+//                    //todo 这个分支要修改一下
+//                    //当这种情况，我们是先让WebView 消耗滑动事件，父布局不应该在dispatchNestedPreScroll消费我们的事件
+//                    deltaY=Math.min(0,deltaY+getScrollY());
+//                }
                 if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset, ViewCompat.TYPE_TOUCH)) {
                     deltaY -= mScrollConsumed[1];//纵轴位移- 被父布局消费的滑动距离
                     vtev.offsetLocation(0, mScrollOffset[1]);//
@@ -152,43 +150,35 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 }
                 if (mIsBeingDragged) {
                     mLastMotionY = y - mScrollOffset[1];//上一次的坐标
-
-                    final int oldY = getScrollY();
-                     int scrolledDeltaY = getScrollY() - oldY;
-                     int unconsumedY = deltaY - scrolledDeltaY;
+                     int scrolledDeltaY = 0;
+                     int unconsumedY = deltaY;
                     if(Math.abs(deltaY)>0){
                         if(deltaY<=0){
                             if(canScrollVertically(-1)){//向顶部滑动
                                 if(getScrollY()+deltaY<0){
-//                                    scrollBy(0,-getScrollY());
                                     scrolledDeltaY=-getScrollY();
-                                    unconsumedY=0;
+                                    unconsumedY=getScrollY()+deltaY;
+                                    vtev.offsetLocation(0, unconsumedY);//这行不知对不对
                                 }else {
-//                                    scrollBy(0,deltaY);
                                     scrolledDeltaY=deltaY;
                                     unconsumedY=0;
                                 }
-                                super.onTouchEvent(vtev);
                             }
-
                         }else {
                             if(canScrollVertically(1)){
-//                                scrollBy(0,deltaY);
-                                super.onTouchEvent(vtev);
+                                //todo 这里没有处理底部的事件传递给父布局，本例不需要
                                 scrolledDeltaY=deltaY;
                                 unconsumedY=0;
                             }
                         }
-
                     }
+                    super.onTouchEvent(vtev);
                     if (dispatchNestedScroll(0, scrolledDeltaY, 0, unconsumedY, mScrollOffset)) {
                         mLastMotionY -= mScrollOffset[1];
                         vtev.offsetLocation(0, mScrollOffset[1]);
                         mNestedYOffset += mScrollOffset[1];
                     }
-
                 }
-
                 result =true;
                 break;
 

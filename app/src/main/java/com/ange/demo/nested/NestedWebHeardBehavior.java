@@ -22,31 +22,26 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
 
 
     @Override
-    public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
-        return super.onInterceptTouchEvent(parent, child, ev);
-    }
-
-    @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
-
         WebView view=coordinatorLayout.findViewById(R.id.web);
-        Log.d(TAG,"getScrollY="+view.getScrollY());
         Log.d(TAG,"dy="+dy);
-        if(view.getScrollY()<=0){
+        if(child.getBottom()>0&&dy>0||dy<0&&view.getScrollY()<=0){
             super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
+        }else {
+            super.onNestedPreScroll(coordinatorLayout, child, target, dx, 0, consumed, type);
         }
-
     }
 
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-
         WebView view=coordinatorLayout.findViewById(R.id.web);
         Log.d(TAG,"dyUnconsumed="+dyUnconsumed);
-        if(view.getScrollY()<=0){
-
-           super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+        Log.d(TAG,"getScrollY="+view.getScrollY());
+        if(dyUnconsumed<0&&view.getScrollY()<=0||dyUnconsumed>0&&view.getScrollY()<=0){
+            super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+        }else {
+            super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed+dyUnconsumed, dxUnconsumed, 0, type);
         }
     }
 

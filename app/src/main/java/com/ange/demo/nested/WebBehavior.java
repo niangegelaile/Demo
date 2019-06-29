@@ -25,7 +25,7 @@ public class WebBehavior extends AppBarLayout.ScrollingViewBehavior {
         WebView view=child.findViewById(R.id.web);
         View appbar=parent.findViewById(R.id.appbar);
         Log.d("WebBehavior","appbar.getBottom()="+appbar.getBottom());
-        if(appbar.getBottom()<=0){
+        if(appbar.getBottom()>0){
             Log.d("WebBehavior","ev.getY"+ev.getY());
             return true;
         }
