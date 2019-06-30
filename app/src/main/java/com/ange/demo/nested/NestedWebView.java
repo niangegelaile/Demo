@@ -159,9 +159,16 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                         }else {
                             if(canScrollVertically(1)){
                                 //todo 这里没有处理底部的事件传递给父布局，本例不需要
-                                Log.d(TAG,"canScrollVertically");
-                                scrolledDeltaY=deltaY;
-                                unconsumedY=0;
+                                Log.d(TAG,"canScrollVertically:deltaY:"+deltaY);
+                                if(deltaY-getTop()>0){
+                                    scrolledDeltaY=deltaY-getTop();
+                                    unconsumedY=getTop();
+                                    vtev.offsetLocation(0, unconsumedY);//这行不知对不对
+                                    mNestedYOffset += unconsumedY;
+                                }else {
+                                    scrolledDeltaY=deltaY;
+                                    unconsumedY=0;
+                                }
                             }
                         }
                     }
