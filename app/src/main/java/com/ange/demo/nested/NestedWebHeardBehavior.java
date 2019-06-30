@@ -20,35 +20,13 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
         super(context, attrs);
     }
 
-
-    @Override
-    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
-        WebView view=coordinatorLayout.findViewById(R.id.web);
-        Log.d(TAG,"dy="+dy);
-        if(child.getBottom()>0&&dy>0||dy<0&&view.getScrollY()<=0){
-            super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
-        }else {
-            super.onNestedPreScroll(coordinatorLayout, child, target, dx, 0, consumed, type);
-        }
-    }
-
-
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         WebView view=coordinatorLayout.findViewById(R.id.web);
         Log.d(TAG,"dyUnconsumed="+dyUnconsumed);
         Log.d(TAG,"getScrollY="+view.getScrollY());
-        if(dyUnconsumed<0&&view.getScrollY()<=0||dyUnconsumed>0&&view.getScrollY()<=0){
+        if(dyUnconsumed<0&&view.getScrollY()<=0){
             super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
-        }else {
-            super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed+dyUnconsumed, dxUnconsumed, 0, type);
         }
-    }
-
-
-
-    @Override
-    public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
-        return super.onTouchEvent(parent, child, ev);
     }
 }

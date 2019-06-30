@@ -14,32 +14,21 @@ import android.webkit.WebView;
 import com.ange.demo.R;
 
 public class WebBehavior extends AppBarLayout.ScrollingViewBehavior {
-
+    private final static String TAG="WebBehavior";
     public WebBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
 
     @Override
-    public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
-        WebView view=child.findViewById(R.id.web);
-        View appbar=parent.findViewById(R.id.appbar);
-        Log.d("WebBehavior","appbar.getBottom()="+appbar.getBottom());
-        if(appbar.getBottom()>0){
-            Log.d("WebBehavior","ev.getY"+ev.getY());
-            return true;
+    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
+        if(child instanceof NestedWebView){
+            NestedWebView nestedWebView= (NestedWebView) child;
+            Log.d(TAG,"nestedWebView.getTop():"+nestedWebView.getTop());
+            if(nestedWebView.getTop()<=0){
+                super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
+            }
         }
-        return super.onInterceptTouchEvent(parent, child, ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
-        WebView view=child.findViewById(R.id.web);
-        if(view.getTop()<=0){
-            Log.d("WebBehavior","ev.getY"+ev.getY());
-            return view.onTouchEvent(ev);
-        }
-        return super.onTouchEvent(parent, child, ev);
     }
 
     @Override
