@@ -18,22 +18,4 @@ public class WebBehavior extends AppBarLayout.ScrollingViewBehavior {
     public WebBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
-
-    @Override
-    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        if(child instanceof NestedWebView){
-            NestedWebView nestedWebView= (NestedWebView) child;
-            Log.d(TAG,"nestedWebView.getTop():"+nestedWebView.getTop());
-            if(nestedWebView.getTop()<=0){
-                super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
-            }
-        }
-    }
-
-    @Override
-    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
-    }
 }
