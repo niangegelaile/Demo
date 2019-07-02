@@ -9,6 +9,7 @@
         app:layout_behavior="com.ange.demo.nested.NestedWebHeardBehavior"
         android:layout_width="match_parent"
         android:background="#fff"
+        app:elevation="0dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -44,6 +45,8 @@
     <com.ange.demo.nested.NestedWebView
         app:layout_behavior="@string/web_behavior"
         android:id="@+id/web"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
