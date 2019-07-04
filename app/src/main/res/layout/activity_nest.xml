@@ -24,24 +24,7 @@
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--<android.support.v4.widget.NestedScrollView-->
-        <!--app:layout_behavior="com.ange.demo.nested.WebBehavior"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
 
-        <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-           <!--<WebView-->
-               <!--android:id="@+id/web"-->
-               <!--android:layout_width="match_parent"-->
-               <!--android:layout_height="wrap_content">-->
-
-           <!--</WebView>-->
-        <!--</LinearLayout>-->
-    <!--</android.support.v4.widget.NestedScrollView>-->
     <com.ange.demo.nested.NestedWebView
         app:layout_behavior="@string/web_behavior"
         android:id="@+id/web"

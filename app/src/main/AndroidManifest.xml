@@ -79,6 +79,7 @@
         <activity android:name=".midea.MideaActivity"/>
         <activity android:name=".plugin.SubActivity"/>
         <activity android:name=".nested.NestActivity"/>
+        <activity android:name=".page.PageActivity"/>
     </application>
 
 </manifest>

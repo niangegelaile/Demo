@@ -15,6 +15,7 @@ import com.ange.demo.js.WebActivity;
 import com.ange.demo.lifecycle.LifecycleActivity;
 import com.ange.demo.midea.MideaActivity;
 import com.ange.demo.nested.NestActivity;
+import com.ange.demo.page.PageActivity;
 import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.plugin.SubActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         addItem("android插件化",SubActivity.class);
         addItem("nested",NestActivity.class);
+        addItem("page",PageActivity.class);
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
