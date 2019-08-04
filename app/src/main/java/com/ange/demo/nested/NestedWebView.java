@@ -137,7 +137,6 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                     Log.d(TAG, "dispatchNestedPreScroll消费：" + mScrollConsumed[1]);
                     deltaY -= mScrollConsumed[1];//纵轴位移- 被父布局消费的滑动距离
                     Log.d(TAG, "dispatchNestedPreScroll未消费：" + deltaY);
-//                    vtev.offsetLocation(0, mScrollOffset[1]);//这句加不加一样
                 }
                 moveDistance = deltaY;
                 if (!mIsBeingDragged && Math.abs(deltaY) > mTouchSlop) {
@@ -159,8 +158,6 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                                 if (getScrollY() + deltaY < 0) {
                                     scrolledDeltaY = -getScrollY();
                                     unconsumedY = getScrollY() + deltaY;
-                                    vtev.offsetLocation(0, unconsumedY);//这行不知对不对
-                                    mNestedYOffset += unconsumedY;
                                 } else {
                                     scrolledDeltaY = deltaY;
                                     unconsumedY = 0;
@@ -173,8 +170,6 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                                 if (deltaY - getTop() > 0) {
                                     scrolledDeltaY = deltaY - getTop();
                                     unconsumedY = getTop();
-                                    vtev.offsetLocation(0, unconsumedY);//这行不知对不对
-                                    mNestedYOffset += unconsumedY;
                                 } else {
                                     scrolledDeltaY = deltaY;
                                     unconsumedY = 0;
@@ -184,7 +179,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                     }
                     if (dispatchNestedScroll(0, scrolledDeltaY, 0, unconsumedY, mScrollOffset)) {
                         mLastMotionY -= mScrollOffset[1];
-                        vtev.offsetLocation(0, mScrollOffset[1]);
+                        vtev.offsetLocation(0, mScrollOffset[1]);//让webView 不滑动 ，webView 位置 偏移，主要是这行代码
                         mNestedYOffset += mScrollOffset[1];
                     }
                 }

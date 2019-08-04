@@ -26,7 +26,7 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
         WebView view=coordinatorLayout.findViewById(R.id.web);
         Log.d(TAG,"dyUnconsumed="+dyUnconsumed);
         Log.d(TAG,"getScrollY="+view.getScrollY());
-        if(dyUnconsumed<0&&view.getScrollY()<=0){//由上往下滑动
+        if(dyUnconsumed<0&&view.getScrollY()<=0){//手指由上往下滑动
             if(type==ViewCompat.TYPE_NON_TOUCH){
                 Log.d(TAG,"TYPE_NON_TOUCH");
             }
