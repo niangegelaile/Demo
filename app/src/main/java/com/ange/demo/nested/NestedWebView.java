@@ -197,21 +197,11 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 eventAddedToVelocityTracker = true;
                 caculateV(mActivePointerId, (int) event.getY());
                 mLastY = (int) event.getY();
-                mActivePointerId = INVALID_POINTER;
-                endDrag();
-                if (mVelocityTracker != null) {
-                    mVelocityTracker.clear();
-                }
-                stopNestedScroll(TYPE_TOUCH);
+                recycleAction();
                 result = super.onTouchEvent(vtev);
                 break;
             case MotionEvent.ACTION_CANCEL:
-                mActivePointerId = INVALID_POINTER;
-                endDrag();
-                if (mVelocityTracker != null) {
-                    mVelocityTracker.clear();
-                }
-                stopNestedScroll(TYPE_TOUCH);
+                recycleAction();
                 result = super.onTouchEvent(event);
                 break;
         }
@@ -223,6 +213,20 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
         vtev.recycle();
         return result;
     }
+
+    /**
+     * 当手指抬起，或取消操作 ，回收本次操作的变量
+     */
+    private void recycleAction(){
+        mActivePointerId = INVALID_POINTER;
+        endDrag();
+        if (mVelocityTracker != null) {
+            mVelocityTracker.clear();
+        }
+        stopNestedScroll(TYPE_TOUCH);
+    }
+
+
 
     private boolean isFlinging;
 
