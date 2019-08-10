@@ -55,9 +55,12 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     private final int[] mScrollConsumed = new int[2];
     private OverScroller mScroller;
     private int mNestedYOffset;
-    private int mLastScrollerY;
-    private int mLastY;
+
     private int moveDistance;
+    private int mHeaderHeight;
+    private int mScrollYOnFling;
+    private long mTimeOnFling;
+    private int mYVelocity;
     private static final String TAG = "NestedWebView";
 
     public NestedWebView(Context context, AttributeSet attrs) {
@@ -72,6 +75,13 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
 
     public NestedWebView(Context context) {
         this(context, null);
+    }
+
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        mHeaderHeight=getTop();
     }
 
     private NestedScrollingChildHelper getScrollingChildHelper() {
@@ -119,7 +129,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
 
                 // Remember where the motion event started
                 mLastMotionY = (int) event.getY();
-                mLastY = mLastMotionY;
+
                 mActivePointerId = event.getPointerId(0);
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH);
                 result = super.onTouchEvent(event);
@@ -195,14 +205,13 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                     mVelocityTracker.addMovement(vtev);
                 }
                 eventAddedToVelocityTracker = true;
-                caculateV(mActivePointerId, (int) event.getY());
-                mLastY = (int) event.getY();
+                caculateV(mActivePointerId);
                 recycleAction();
                 result = super.onTouchEvent(vtev);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 recycleAction();
-                result = super.onTouchEvent(event);
+                result = super.onTouchEvent(vtev);
                 break;
         }
         if (!eventAddedToVelocityTracker) {
@@ -233,14 +242,16 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     /**
      * 处理fling 速度问题
      * @param mActivePointerId
-     * @param curY
      */
-    private void caculateV(int mActivePointerId, int curY) {
+    private void caculateV(int mActivePointerId) {
+        mScrollYOnFling=getScrollY();
+        mTimeOnFling=System.currentTimeMillis();
         mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-        int initialVelocity = (int) mVelocityTracker.getYVelocity(mActivePointerId);
-        Log.d(TAG, " caculateV curY:" + curY + " mLastY:" + mLastY + " initialVelocity:" + initialVelocity);
-        if ((Math.abs(initialVelocity) > mMinimumVelocity)) {
-            mLastScrollerY = getScrollY();
+        mYVelocity= (int) mVelocityTracker.getYVelocity(mActivePointerId);
+
+        Log.d(TAG,  " mYVelocity:" + mYVelocity);
+        if ((Math.abs(mYVelocity) > mMinimumVelocity)) {
+            mScrollYOnFling = getScrollY();
             isFlinging = true;
         }
     }
@@ -249,12 +260,15 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
     public void computeScroll() {
         super.computeScroll();
         if (isFlinging) {
-            int dy = getScrollY() - mLastScrollerY;
             if (getScrollY() == 0) {
-                int velocityY = 1000;
+                int dy = getScrollY() - mScrollYOnFling;
+                long dT=System.currentTimeMillis()-mTimeOnFling;
+
+                int velocityY = (int) (dT*mYVelocity/1000-dy);
+                Log.d(TAG,"剩余的velocityY:"+velocityY+" moveDistance:"+moveDistance);
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_NON_TOUCH);
                 if (moveDistance < 0) {
-                    dispatchNestedScroll(0, dy, 0, -velocityY, null,
+                    dispatchNestedScroll(0, dy, 0, -Math.abs(velocityY), null,
                             ViewCompat.TYPE_NON_TOUCH);
                 }
                 isFlinging = false;
