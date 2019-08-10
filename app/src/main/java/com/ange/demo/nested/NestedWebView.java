@@ -104,9 +104,17 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
         MotionEvent vtev = MotionEvent.obtain(event);//复制一个event
         final int actionMasked = event.getActionMasked();//类似getAction
         boolean result = false;
+        /*
+         * If being flinged and user touches, stop the fling. isFinished
+         * will be false if being flinged.//如果在fling 的过程中用户触摸屏幕，则停止fling
+         */
+        if (!mScroller.isFinished()) {
+            mScroller.abortAnimation();
+        }
         if (actionMasked == MotionEvent.ACTION_DOWN) {
             mNestedYOffset = 0;
             isFlinging = false;
+            moveDistance=0;
         }
         vtev.offsetLocation(0, mNestedYOffset);
 
@@ -119,13 +127,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                     }
                 }
 
-                /*
-                 * If being flinged and user touches, stop the fling. isFinished
-                 * will be false if being flinged.//如果在fling 的过程中用户触摸屏幕，则停止fling
-                 */
-                if (!mScroller.isFinished()) {
-                    mScroller.abortAnimation();
-                }
+
 
                 // Remember where the motion event started
                 mLastMotionY = (int) event.getY();
@@ -207,6 +209,9 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
                 eventAddedToVelocityTracker = true;
                 caculateV(mActivePointerId);
                 recycleAction();
+                if(isFlinging){
+                    return true;
+                }
                 result = super.onTouchEvent(vtev);
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -247,12 +252,18 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
         mScrollYOnFling=getScrollY();
         mTimeOnFling=System.currentTimeMillis();
         mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-        mYVelocity= (int) mVelocityTracker.getYVelocity(mActivePointerId);
+        mYVelocity= -(int) mVelocityTracker.getYVelocity(mActivePointerId)/2;
 
         Log.d(TAG,  " mYVelocity:" + mYVelocity);
         if ((Math.abs(mYVelocity) > mMinimumVelocity)) {
             mScrollYOnFling = getScrollY();
             isFlinging = true;
+            startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_NON_TOUCH);
+            if(dispatchNestedPreScroll(0,mYVelocity,mScrollConsumed,mScrollOffset,ViewCompat.TYPE_NON_TOUCH)){
+                mYVelocity-= mScrollConsumed[1];
+            }
+            stopNestedScroll(ViewCompat.TYPE_NON_TOUCH);
+           flingScroll(0,mYVelocity);
         }
     }
 
@@ -261,18 +272,18 @@ public class NestedWebView extends WebView implements NestedScrollingChild2 {
         super.computeScroll();
         if (isFlinging) {
             if (getScrollY() == 0) {
-                int dy = getScrollY() - mScrollYOnFling;
-                long dT=System.currentTimeMillis()-mTimeOnFling;
-
-                int velocityY = (int) (dT*mYVelocity/1000-dy);
-                Log.d(TAG,"剩余的velocityY:"+velocityY+" moveDistance:"+moveDistance);
-                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_NON_TOUCH);
                 if (moveDistance < 0) {
-                    dispatchNestedScroll(0, dy, 0, -Math.abs(velocityY), null,
+                    int dy = getScrollY() - mScrollYOnFling;
+                    long dT=System.currentTimeMillis()-mTimeOnFling;
+
+                    int velocityY = (int) (dT*mYVelocity/1000-dy);
+                    Log.d(TAG,"剩余的velocityY:"+velocityY+" moveDistance:"+moveDistance);
+                    startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_NON_TOUCH);
+                    dispatchNestedScroll(0, dy, 0, -Math.abs(velocityY)/2, null,
                             ViewCompat.TYPE_NON_TOUCH);
+                    stopNestedScroll(ViewCompat.TYPE_NON_TOUCH);
                 }
                 isFlinging = false;
-                stopNestedScroll(ViewCompat.TYPE_NON_TOUCH);
             }
         }
         Log.d(TAG, "computeScroll webView:getScrollY:" + getScrollY());

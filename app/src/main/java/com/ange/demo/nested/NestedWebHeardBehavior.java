@@ -23,7 +23,7 @@ public class NestedWebHeardBehavior extends AppBarLayout.Behavior {
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-        WebView view=coordinatorLayout.findViewById(R.id.web);
+        WebView view= (WebView) target;
         Log.d(TAG,"dyUnconsumed="+dyUnconsumed);
         Log.d(TAG,"getScrollY="+view.getScrollY());
         if(dyUnconsumed<0&&view.getScrollY()<=0){//手指由上往下滑动
