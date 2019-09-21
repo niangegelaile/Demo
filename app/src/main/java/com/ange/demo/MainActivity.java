@@ -21,6 +21,7 @@ import com.ange.demo.plugin.SubActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.shadow.ShadowActivity;
 import com.ange.demo.sroller.ScrollerActivity;
+import com.example.ffmpeg.JniUtil;
 import com.niangegelaile.kotlinlibrary.KotlinActivity;
 
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.setCatalogs(list);
         Log.d(TAG,"main: onCreate");
+        String jniString=new JniUtil().stringFromJNI();
+        Log.d(TAG,"jniString="+jniString);
     }
 
     @Override
