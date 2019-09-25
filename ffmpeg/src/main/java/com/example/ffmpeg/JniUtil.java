@@ -7,4 +7,5 @@ public class JniUtil {
 
     public native String stringFromJNI();
 
+    public native void meta(String path);
 }
