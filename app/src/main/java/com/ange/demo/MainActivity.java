@@ -1,7 +1,9 @@
 package com.ange.demo;
 
+import android.app.usage.ExternalStorageStats;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -20,8 +22,8 @@ import com.ange.demo.parallax.ParallaxActivity;
 import com.ange.demo.plugin.SubActivity;
 import com.ange.demo.pullToRefresh.RefreshActivity;
 import com.ange.demo.shadow.ShadowActivity;
+import com.ange.demo.shortcut.ShortcutActivity;
 import com.ange.demo.sroller.ScrollerActivity;
-import com.example.ffmpeg.JniUtil;
 import com.niangegelaile.kotlinlibrary.KotlinActivity;
 
 import java.util.ArrayList;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         addItem("android插件化",SubActivity.class);
         addItem("nested",NestActivity.class);
         addItem("page",PageActivity.class);
+        addItem("添加快捷方式",ShortcutActivity.class);
         list.add(catalogControl);
         list.add(catalogXiaomi);
         list.add(catalogRefresh);
@@ -69,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
         list.add(catalogShodow);
 
         binding.setCatalogs(list);
-        Log.d(TAG,"main: onCreate");
-        String jniString=new JniUtil().stringFromJNI();
-        Log.d(TAG,"jniString="+jniString);
+//        Log.d(TAG,"main: onCreate");
+//        String jniString=JniUtil.stringFromJNI();
+//        Log.d(TAG,"jniString="+jniString);
+//        JniUtil.meta(Environment.getExternalStorageDirectory().getPath()+"/11.mp4");
     }
 
     @Override

@@ -5,7 +5,7 @@ public class JniUtil {
         System.loadLibrary("native-lib");
     }
 
-    public native String stringFromJNI();
+    public static native String stringFromJNI();
 
-    public native void meta(String path);
+    public static native void meta(String path);
 }

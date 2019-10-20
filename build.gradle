@@ -43,7 +43,7 @@ ext {
 
     anko_version = '0.10.7'
 
-    minSdkVersion = 26
+    minSdkVersion = 19
 
     targetSdkVersion = 26
     compileSdkVersion = 26

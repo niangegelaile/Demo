@@ -28,7 +28,11 @@
     <uses-permission android:name="android.permission.READ_SMS" />
 
 
-
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
 
 
 
@@ -80,6 +84,7 @@
         <activity android:name=".plugin.SubActivity"/>
         <activity android:name=".nested.NestActivity"/>
         <activity android:name=".page.PageActivity"/>
+        <activity android:name=".shortcut.ShortcutActivity"/>
     </application>
 
 </manifest>

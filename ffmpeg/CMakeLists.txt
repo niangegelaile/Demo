@@ -18,5 +18,5 @@ add_library(avformat SHARED IMPORTED)
 set_target_properties(avformat PROPERTIES IMPORTED_LOCATION ${JNI_LIBS_DIR}/${ANDROID_ABI}/libavformat.so)
 add_library(swscale SHARED IMPORTED)
 set_target_properties(swscale PROPERTIES IMPORTED_LOCATION ${JNI_LIBS_DIR}/${ANDROID_ABI}/libswscale.so)
-
+include_directories(${JNI_LIBS_DIR}/includes)
 target_link_libraries(native-lib ${log-lib} ${android-lib} avutil swresample avcodec avdevice avfilter avformat swscale)

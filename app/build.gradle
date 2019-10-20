@@ -54,7 +54,7 @@ dependencies {
     testImplementation "android.arch.paging:common:$paging_version"
     // optional - RxJava support, currently in release candidate
     //    implementation "android.arch.paging:rxjava2:1.0.0-rc1"
-    implementation project(':ffmpeg')
+//    implementation project(':ffmpeg')
 }
 repositories {
     mavenCentral()
